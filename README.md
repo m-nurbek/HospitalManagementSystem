@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Hospital Management System is an application for managing data about processes in medical organization. It manages data about Doctors and Patiens and their interaction. It currently has 3 classes of users, which are admins, doctors and patients.
+Hospital Management System is an application for managing data about processes in a medical organization. It manages data about Doctors and Patiens and their interaction. It currently has 3 classes of users, which are admins, doctors and patients.
 
 > __Admins__ 💻 - have absolute access to all functions and data.
 > __Doctors__ 👨‍⚕️- can manage data about patients.
