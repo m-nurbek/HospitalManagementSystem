@@ -1,0 +1,19 @@
+{% extends "theapp/header.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<!--Register-->
+<div class="container py-5">
+	<h1>Add doctor</h1>
+	<form method="POST", enctype = "multipart/form-data">
+		{% csrf_token %}
+		{{ userForm|crispy }}
+    {{ doctorForm|crispy }}
+		<button class="btn btn-primary" type="submit">Add</button>
+	</form>
+	<p class="text-center"><a href="/admin_doctor_choices">Return to choices</a> instead.</p>
+</div>
+
+{% endblock %}
