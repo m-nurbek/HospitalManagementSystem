@@ -7,7 +7,7 @@ Hospital Management System is an application for managing data about processes i
 
 > __Admins__ 💻 - have absolute access to all functions and data.
 > __Doctors__ 👨‍⚕️- can manage data about patients.
-> __Patients__ 🤒 - a class that stores info about patients
+> __Patients__ 🤒 - a class that stores info about patients.
 
 
 ## Features
