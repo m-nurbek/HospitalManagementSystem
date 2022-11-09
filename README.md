@@ -5,9 +5,9 @@
 
 Hospital Management System is an application for managing data about processes in a medical organization. It manages data about Doctors and Patiens and their interaction. It currently has 3 classes of users, which are admins, doctors and patients.
 
-> __Admins__ 💻 - have absolute access to all functions and data.
-> __Doctors__ 👨‍⚕️- can manage data about patients.
-> __Patients__ 🤒 - a class that stores info about patients.
+> __Admins__ 💻 - have absolute access to all functions and data.<br>
+> __Doctors__ 👨‍⚕️- can manage data about patients.<br>
+> __Patients__ 🤒 - a class that stores info about patients.<br>
 
 
 ## Features
