@@ -5,11 +5,13 @@ import datetime
 from django.core import validators
 
 departments=[('Cardiologist','Cardiologist'),
-('Dermatologists','Dermatologists'),
-('Emergency Medicine Specialists','Emergency Medicine Specialists'),
-('Allergists/Immunologists','Allergists/Immunologists'),
-('Anesthesiologists','Anesthesiologists'),
-('Colon and Rectal Surgeons','Colon and Rectal Surgeons')
+('Dentist','Dentist'),
+('Neurologist','Neurologist'),
+('Pulmanologist','Pulmanologist'),
+('Surgeon','Surgeon'),
+('Labaratory','Labaratory'),
+('Diagnostics','Diagnostics'),
+('Children','Children')
 ]
 
 categories = [('Highest','Highest'), ('First','First'), ('Second','Second')]
@@ -95,3 +97,17 @@ class Patient(models.Model):
         return self.user.id
     def __str__(self):
         return self.user.first_name+" ("+self.symptoms+")"
+
+
+
+
+
+
+class Appointment(models.Model):
+    patient_id=models.PositiveIntegerField(null=True)
+    doctor_id=models.PositiveIntegerField(null=True)
+    patientName=models.CharField(max_length=40,null=True)
+    doctorName=models.CharField(max_length=40,null=True)
+    appointmentDate=models.DateField(auto_now=True)
+    description=models.TextField(max_length=500)
+    status=models.BooleanField(default=False)

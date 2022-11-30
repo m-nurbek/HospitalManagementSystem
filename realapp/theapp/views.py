@@ -19,6 +19,41 @@ from . import forms,models
 
 from django.core.paginator import Paginator #import Paginator
 
+# load pages:
+def cardiology(request):
+    doctors=models.Doctor.objects.all()
+    return render(request=request, template_name="theapp/cardiology.html", context = {'doctors':doctors})
+
+def children(request):
+    doctors=models.Doctor.objects.all()
+    return render(request=request, template_name="theapp/children.html", context = {'doctors':doctors})
+
+def dentistry(request):
+    doctors=models.Doctor.objects.all()
+    return render(request=request, template_name="theapp/dentistry.html", context = {'doctors':doctors})
+
+def mri(request):
+    doctors=models.Doctor.objects.all()
+    return render(request=request, template_name="theapp/mri.html", context = {'doctors':doctors})
+
+def neurology(request):
+    doctors=models.Doctor.objects.all()
+    return render(request=request, template_name="theapp/neurology.html", context = {'doctors':doctors})
+
+def pulmonology(request):
+    doctors=models.Doctor.objects.all()
+    return render(request=request, template_name="theapp/pulmonology.html", context = {'doctors':doctors})
+
+def surgery(request):
+    doctors=models.Doctor.objects.all()
+    return render(request=request, template_name="theapp/surgery.html", context = {'doctors':doctors})
+
+def lab(request):
+    doctors=models.Doctor.objects.all()
+    return render(request=request, template_name="theapp/lab.html", context = {'doctors':doctors})
+
+
+
 
 
 
@@ -82,6 +117,7 @@ def register_doctor(request):
 
             doctor=doctorForm.save(commit=False)
             doctor.user=user
+            doctor.status = False
             doctor=doctor.save()
             my_doctor_group = Group.objects.get_or_create(name='DOCTOR')
             my_doctor_group[0].user_set.add(user)
@@ -103,6 +139,7 @@ def register_patient(request):
             user.save()
             patient=patientForm.save(commit=False)
             patient.user=user
+            patient.status = False
             patient=patient.save()
             my_patient_group = Group.objects.get_or_create(name='PATIENT')
             my_patient_group[0].user_set.add(user)
@@ -122,7 +159,7 @@ def login_request(request):
 			if user is not None:
 				login(request, user)
 				messages.info(request, f"You are now logged in as {username}.")
-				return redirect("theapp:home_back")
+				return redirect("theapp:afterlogin")
 			else:
 				messages.error(request,"Invalid username or password.")
 		else:
@@ -142,10 +179,40 @@ def logout_request(request):
 
 
 
+def afterlogin(request):
+    if admin_verify(request.user):
+        return redirect('theapp:admin_page')
+    elif doctor_verify(request.user):
+        accountapproval=models.Doctor.objects.all().filter(user_id=request.user.id,status=True)
+        if accountapproval:
+            return redirect('theapp:doctor_page')
+        else:
+            return render(request,'theapp/doctor_no_approval.html')
+    elif patient_verify(request.user):
+        accountapproval=models.Patient.objects.all().filter(user_id=request.user.id,status=True)
+        if accountapproval:
+            return redirect('theapp:patient_page')
+        else:
+            return render(request,'theapp/patient_no_approval.html')
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ADMIN STAFF:
 
 def admin_verify(user):
     return user.groups.filter(name='ADMIN').exists()
@@ -161,15 +228,28 @@ def patient_verify(user):
 def admin_page(request):
     return render(request,'theapp/admin_page.html')
 
+@login_required(login_url='login')
+@user_passes_test(doctor_verify)
+def doctor_page(request):
+    return render(request,'theapp/doctor_page.html')
+
+@login_required(login_url='login')
+@user_passes_test(patient_verify)
+def patient_page(request):
+    return render(request,'theapp/patient_page.html')
 
 
+
+
+
+
+### ADMIN AND DOCTOR:
 
 @login_required(login_url='login')
 @user_passes_test(admin_verify)
 def admin_doctor(request):
-    doctors=models.Doctor.objects.all()
+    doctors=models.Doctor.objects.all().filter(status=True)
     return render(request,'theapp/admin_doctor.html',{'doctors':doctors})
-
 
 
 @login_required(login_url='login')
@@ -188,6 +268,7 @@ def add_doctor(request):
 
             doctor=doctorForm.save(commit=False)
             doctor.user=user
+            doctor.status = True
             doctor=doctor.save()
             my_doctor_group = Group.objects.get_or_create(name='DOCTOR')
             my_doctor_group[0].user_set.add(user)
@@ -199,6 +280,21 @@ def add_doctor(request):
 
 
 
+
+
+@login_required(login_url='login')
+@user_passes_test(admin_verify)
+def approve_doctor(request):
+    doctors=models.Doctor.objects.all().filter(status=False)
+    return render(request,'theapp/approve_doctor.html',{'doctors':doctors})
+
+@login_required(login_url='login')
+@user_passes_test(admin_verify)
+def accept_doctor(request,doctor_id):
+    doctor=models.Doctor.objects.get(id=doctor_id)
+    doctor.status=True
+    doctor.save()
+    return redirect(reverse('theapp:approve_doctor'))
 
 
 @login_required(login_url='login')
@@ -251,6 +347,23 @@ def update_doctor(request,doctor_id):
 
 
 
+### ADMIN AND PATIENT:
+
+@login_required(login_url='login')
+@user_passes_test(admin_verify)
+def approve_patient(request):
+    patients=models.Patient.objects.all().filter(status=False)
+    return render(request,'theapp/approve_patient.html',{'patients':patients})
+
+@login_required(login_url='login')
+@user_passes_test(admin_verify)
+def accept_patient(request,patient_id):
+    patient=models.Patient.objects.get(id=patient_id)
+    patient.status=True
+    patient.save()
+    return redirect(reverse('theapp:approve_patient'))
+
+
 
 
 
@@ -259,7 +372,7 @@ def update_doctor(request,doctor_id):
 @login_required(login_url='login')
 @user_passes_test(admin_verify)
 def admin_patient(request):
-    patients=models.Patient.objects.all()
+    patients=models.Patient.objects.all().all().filter(status=True)
     return render(request,'theapp/admin_patient.html',{'patients':patients})
 
 
@@ -280,6 +393,7 @@ def add_patient(request):
 
             patient=patientForm.save(commit=False)
             patient.user=user
+            patient.status = True
             patient=patient.save()
             my_patient_group = Group.objects.get_or_create(name='PATIENT')
             my_patient_group[0].user_set.add(user)

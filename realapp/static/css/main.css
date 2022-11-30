@@ -1,0 +1,332 @@
+body {
+	font-family: 'Montserrat', sans-serif;
+	padding: 0;
+	margin: 0;
+	color: #000;
+	font-size: 16px;
+
+}
+div, p, input, header, a, form {
+	box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+
+}
+
+
+h3 {
+	font-size: 20px;
+}
+
+section {
+	padding-top: 28px;
+}
+
+ul,li {
+	display: block;
+	padding: 0;
+	margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+.list {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0 0 5px 5px;
+}
+.list-items {
+  padding: 10px 5px;
+}
+.list-items:hover {
+  background-color: #dddddd;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+	font-size: 15px;
+}
+
+.title{
+	font-size: 25px;
+	margin-bottom: 42px;
+}
+
+a{
+	text-decoration: none;
+	transition: all 0.5s ease;
+}
+
+header{
+	padding: 28px 90px 0;
+	display: flex;
+	justify-content: space-between;
+}
+
+.header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center
+}
+
+.btn{
+	font-size: 18px;
+	display: block;
+	text-align: center;
+	border: none;
+	cursor: pointer;
+	padding: 13px 25px;
+	background: #4F90CB;
+	color: #fff;
+	border-radius: 10px;
+}
+
+.container{
+	background: #F5F5F5;
+	padding: 55px 140px;
+}
+
+.search{
+	width: 1005px;
+    height: 50px;
+    border: 1px solid #989898;
+    border-radius: 15px;
+    background: #F5F5F5;
+    padding-left: 25px;
+    margin-bottom: 15px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.submit{
+	width: 150px;
+	height: 50px;
+ 	color: #fff;
+ 	border: none;
+    border-radius: 15px;
+    background: #4F90CB;
+    margin-bottom: 15px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 15px;
+	transition: all 0.5s ease;
+}
+
+.submit:hover{
+	background: #2A6092;
+}
+
+.autocomplete{
+	align-items: center;
+}
+
+.specialization {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.spec img{
+	width: 280px;
+	height: 259px;
+}
+
+.spec:hover{
+	filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.07)) drop-shadow(0px 41.7776px 54.42px rgba(0, 0, 0, 0.0503198)) drop-shadow(0px 22.3363px 30.87px rgba(0, 0, 0, 0.0417275)) drop-shadow(0px 12.5216px 18.02px rgba(0, 0, 0, 0.035)) drop-shadow(0px 6.6501px 16.32px rgba(0, 0, 0, 0.0282725)) drop-shadow(0px 2.76726px 24.21px rgba(0, 0, 0, 0.0196802));
+}
+
+.surgeon{
+	width: 175px;
+	height: 175px;
+}
+
+.doctor{
+	display: flex;
+	background: #fff;
+	padding: 28px 56px;
+	margin-bottom: 3px;
+}
+
+.timeslot{
+	display: flex;
+	justify-content: space-between;
+	width: 273px;
+}
+
+.timeslot a{
+	color: #000;
+	padding: 6px 20px;
+	border: 1px solid #4F90CB;
+	border-radius: 15px;
+}
+
+.timeslot a:hover {
+	background: rgba(79, 144, 203, 0.33);;
+}
+
+.timeslot li{
+	margin-bottom: 20px;
+}
+
+.docinfo{
+	margin-top: 15px;
+	margin-left: 74px;
+}
+
+.docinfo p{
+	margin-top: 7px;
+	margin-bottom: 25px;
+}
+
+.go{
+	position: absolute;
+	right:196px;
+	margin-top: 20px;
+}
+
+.modal {
+    position: fixed; /* фиксированное положение */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5); /* фон */
+    z-index: 1050;
+    opacity: 0; /* по умолчанию модальное окно прозрачно */
+    -webkit-transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in; /* анимация перехода */
+    pointer-events: none; /* элемент невидим для событий мыши */
+    margin: 0;
+    padding: 0;
+}
+/* При отображении модального окно */
+.modal:target {
+    opacity: 1; /* делаем окно видимым */
+	  pointer-events: auto; /* элемент видим для событий мыши */
+    overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
+}
+/* ширина модального окна и его отступы от экрана */
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+@media (min-width: 576px) {
+  .modal-dialog {
+      max-width: 442px;
+      margin: 30px auto; /* отображение окна по центру */
+  }
+}
+/* Стили для блока с контентом окна */
+.modal-content {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+    padding: 34px 41px;
+}
+@media (min-width: 768px) {
+  .modal-content {
+      -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+      box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  }
+}
+/* Стили заголовка окна */
+.modal-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #eceeef;
+}
+.modal-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+/* Стили кнопки "х" ("Закрыть")  */
+.close {
+    float: right;
+    font-family: sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    text-decoration: none;
+}
+/* Стили для закрывающей кнопки в фокусе или наведении */
+.close:focus, .close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .75;
+}
+/* Стили блока основного содержимого окна */
+.modal-body {
+  position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 15px;
+    overflow: auto;
+    padding: 20px 37px
+}
+
+.modal-body input{
+	width: 285px;
+	background: #FFFFFF;
+	border: 1px solid #4F90CB;
+	border-radius: 15px;
+	padding: 17px 27px;
+	margin-bottom: 29px;
+	font-size: 16px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+button{
+	width: 280px;
+	padding: 15px 27px;
+	background: #4F90CB;
+	border-radius: 15px;
+	color: #fff;
+	font-size: 25px;
+	font-family: 'Montserrat', sans-serif;
+	border: none;
+	transition: all 0.5s ease;
+}
+
+button:hover{
+	background: #2A6092;
+
+}
