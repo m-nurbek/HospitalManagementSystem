@@ -436,3 +436,71 @@ def delete_patient(request,patient_id):
     patient.delete()
 
     return redirect('theapp:admin_patient')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# PATIENT AND APPOINTMENTS
+@login_required(login_url='login')
+@user_passes_test(patient_verify)
+def patient_create_appointment(request):
+    appointments=forms.AppointmentForm()
+    user=models.User.objects.get(id=patient.user_id)
+
+    userForm=forms.PatientForm(instance=user)
+    patientForm=forms.PatientDetailForm(request.FILES,instance=patient)
+    form={'userForm':userForm,'patientForm':patientForm}
+    if request.method=='POST':
+        userForm=forms.PatientForm(request.POST,instance=user)
+        patientForm=forms.PatientDetailForm(request.POST,request.FILES,instance=patient)
+        if userForm.is_valid() and patientForm.is_valid():
+            user=userForm.save()
+            user.set_password(user.password)
+            user.save()
+            patient=patientForm.save(commit=False)
+            patient.status=True
+            patient.save()
+            return redirect('theapp:admin_patient')
+    return render(request,'theapp/update_patient.html',context=form)
+
+def register_patient(request):
+    userForm=forms.PatientForm()
+    patientForm=forms.PatientDetailForm()
+    mydict={'userForm':userForm,'patientForm':patientForm}
+    if request.method=='POST':
+        userForm=forms.PatientForm(request.POST)
+        patientForm=forms.PatientDetailForm(request.POST,request.FILES)
+        if userForm.is_valid() and patientForm.is_valid():
+            user=userForm.save()
+            user.set_password(user.password)
+            user.save()
+            patient=patientForm.save(commit=False)
+            patient.user=user
+            patient.status = False
+            patient=patient.save()
+            my_patient_group = Group.objects.get_or_create(name='PATIENT')
+            my_patient_group[0].user_set.add(user)
+            login(request, user)
+        return HttpResponseRedirect("login")
+    return render(request,'theapp/register_patient.html',context=mydict)
