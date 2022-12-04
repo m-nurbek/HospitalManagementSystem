@@ -79,6 +79,7 @@ class Patient(models.Model):
     registration_date = models.DateTimeField(default=datetime.date.today, blank=True)
     symptoms = models.CharField(max_length=100, default='Flu')
     status = models.BooleanField(default=False)
+    doctor = models.ManyToManyField(Doctor)
 
     @property
     def get_name(self):
