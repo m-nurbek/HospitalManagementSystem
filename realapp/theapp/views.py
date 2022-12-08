@@ -217,7 +217,10 @@ def afterlogin(request):
 # ADMIN STAFF:
 
 def admin_verify(user):
-    return user.groups.filter(name='ADMIN').exists()
+    if user.groups.filter(name='ADMIN').exists() or user.is_superuser:
+        return True
+    else:
+        return False
 def doctor_verify(user):
     return user.groups.filter(name='DOCTOR').exists()
 def patient_verify(user):
